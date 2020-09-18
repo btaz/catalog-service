@@ -1,2 +1,4 @@
-package com.btaz.catalogservice.domain.model;public class Brand {
+package com.btaz.catalogservice.domain.model;
+
+public class Brand {
 }

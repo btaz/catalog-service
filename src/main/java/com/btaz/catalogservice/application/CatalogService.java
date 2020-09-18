@@ -1,2 +1,88 @@
-package com.btaz.catalogservice.application;public class CatalogService {
+package com.btaz.catalogservice.application;
+
+import com.btaz.catalogservice.domain.model.Brand;
+import com.btaz.catalogservice.domain.model.Catalog;
+import com.btaz.catalogservice.domain.model.CatalogRepository;
+
+public final class CatalogService {
+    private CatalogRepository catalogRepository;
+
+    public CatalogService(CatalogRepository catalogRepository) {
+        this.catalogRepository = catalogRepository;
+    }
+
+    /**
+     * Add a new catalog
+     * @param name catalog name
+     * @param description catalog description
+     */
+    public void addCatalog(String name, String description) {
+        catalogRepository.store(new Catalog(null, name, description));
+    }
+
+    /**
+     * Update catalog
+     */
+    public void updateCatalog() {
+
+    }
+
+    /**
+     * Add a new brand
+     * @param catalogId catalog Id
+     */
+    public void addBrand(String catalogId) {
+
+    }
+
+    /**
+     * Update brand
+     * @param brandName brand name
+     */
+    public void updateBrand(String brandName) {
+
+    }
+
+    /**
+     * Add a new category
+     * @param catalogId catalog Id
+     * @param categoryName category name
+     */
+    public void addCategory(String catalogId, String categoryName) {
+
+    }
+
+    /**
+     * Update category
+     * @param categoryId category Id
+     * @param categoryName category name
+     */
+    public void updateCategory(String categoryId, String categoryName) {
+
+    }
+
+    /**
+     * Add product
+     * @param catalogId catalog Id
+     * @param productName product name
+     */
+    public void addProduct(String catalogId, String productName) {
+
+    }
+
+    /**
+     * Update product
+     * @param productId product Id
+     */
+    public void updateProduct(String productId) {
+
+    }
+
+    /**
+     * Remove product
+     * @param productId product Id
+     */
+    public void removeProduct(String productId) {
+
+    }
 }
