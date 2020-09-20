@@ -1,6 +1,5 @@
 package com.btaz.catalogservice.application;
 
-import com.btaz.catalogservice.domain.model.Brand;
 import com.btaz.catalogservice.domain.model.Catalog;
 import com.btaz.catalogservice.domain.model.CatalogRepository;
 
@@ -15,16 +14,30 @@ public final class CatalogService {
      * Add a new catalog
      * @param name catalog name
      * @param description catalog description
+     * @return catalog
      */
-    public void addCatalog(String name, String description) {
-        catalogRepository.store(new Catalog(null, name, description));
+    public Catalog addCatalog(String name, String description) {
+        return catalogRepository.create(new Catalog(catalogRepository.nextCatalogId(), name, description));
     }
 
     /**
      * Update catalog
      */
-    public void updateCatalog() {
+    public void updateCatalog(Catalog catalog) {
+        catalogRepository.update(catalog);
+    }
 
+    public void deleteCatalog(String id) {
+        catalogRepository.delete(id);
+    }
+
+    /**
+     * Find catalog
+     * @param id Id
+     * @return catalog
+     */
+    public Catalog find(String id) {
+        return catalogRepository.find(id);
     }
 
     /**

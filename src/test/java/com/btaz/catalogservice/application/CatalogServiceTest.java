@@ -2,38 +2,49 @@ package com.btaz.catalogservice.application;
 
 import com.btaz.catalogservice.domain.model.Catalog;
 import com.btaz.catalogservice.domain.model.CatalogRepository;
+import com.btaz.catalogservice.infrastructure.mem.MemCatalogRepository;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CatalogServiceTest {
     private CatalogService service;
 
-    @Mock
-    private CatalogRepository catalogRepository;
-
     @BeforeMethod
     public void beforeMethod() {
-        MockitoAnnotations.openMocks(this);
-        service = new CatalogService(catalogRepository);
+        service = new CatalogService(new MemCatalogRepository());
     }
 
     @Test
-    public void testAddCatalogShouldBeSuccessful() {
+    public void testAddAndFindCatalogShouldBeSuccessful() {
         // given
-        doNothing().when(catalogRepository).store(any(Catalog.class));
         String name = "tools";
         String description = "miscellaneous tools";
 
         // when
-        service.addCatalog(name, description);
+        Catalog createdCatalog = service.addCatalog(name, description);
+        Catalog foundCatalog = service.find(createdCatalog.id());
 
         // then
-        verify(catalogRepository, atLeastOnce()).store(any(Catalog.class));
+        assertThat(createdCatalog).isEqualTo(foundCatalog);
+        assertThat(createdCatalog.name()).isEqualTo(foundCatalog.name());
+        assertThat(createdCatalog.description()).isEqualTo(foundCatalog.description());
+    }
+
+    public void testDeleteOfCatalogShouldBeSuccessful() {
+        // given
+        String name = "tools";
+        String description = "miscellaneous tools";
+
+        // when
+        Catalog createdCatalog = service.addCatalog(name, description);
+        service.deleteCatalog(createdCatalog.id());
+        Catalog foundCatalog = service.find(createdCatalog.id());
+
+        // then
+        assertThat(foundCatalog).isNull();
     }
 }

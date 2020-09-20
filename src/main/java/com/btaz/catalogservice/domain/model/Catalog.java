@@ -1,5 +1,7 @@
 package com.btaz.catalogservice.domain.model;
 
+import java.util.Objects;
+
 public class Catalog {
     private final String id;
     private final String name;
@@ -21,5 +23,18 @@ public class Catalog {
 
     public String description() {
         return description;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Catalog catalog = (Catalog) o;
+        return Objects.equals(id, catalog.id);
     }
 }
