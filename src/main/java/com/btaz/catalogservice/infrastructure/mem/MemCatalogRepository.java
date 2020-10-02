@@ -1,7 +1,7 @@
 package com.btaz.catalogservice.infrastructure.mem;
 
-import com.btaz.catalogservice.domain.model.Catalog;
-import com.btaz.catalogservice.domain.model.CatalogRepository;
+import com.btaz.catalogservice.domain.model.catalog.Catalog;
+import com.btaz.catalogservice.domain.model.catalog.CatalogRepository;
 import org.bson.types.ObjectId;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,15 +14,16 @@ public class MemCatalogRepository implements CatalogRepository {
     }
 
     @Override
-    public Catalog create(Catalog catalog) {
-        dataStore.put(catalog.id(), catalog);
-        return catalog;
+    public String create(String id, String name, String description) {
+        dataStore.put(id, new Catalog(id, name, description));
+        return id;
     }
 
     @Override
-    public void update(Catalog updatedCatalog) {
-        Catalog existingCatalog = dataStore.get(updatedCatalog.id());
-        dataStore.put(updatedCatalog.id(), updatedCatalog);
+    public void update(String id, String name, String description) {
+        if(dataStore.containsKey(id)) {
+            dataStore.put(id, new Catalog(id, name, description));
+        }
     }
 
     @Override
@@ -32,7 +33,12 @@ public class MemCatalogRepository implements CatalogRepository {
 
     @Override
     public void delete(String id) {
+        dataStore.remove(id);
+    }
 
+    @Override
+    public int size() {
+        return dataStore.size();
     }
 
     @Override

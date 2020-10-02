@@ -1,8 +1,8 @@
-package com.btaz.catalogservice.domain.model;
+package com.btaz.catalogservice.domain.model.catalog;
 
 import java.util.Objects;
 
-public class Catalog {
+public final class Catalog {
     private final String id;
     private final String name;
     private final String description;
