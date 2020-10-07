@@ -3,10 +3,11 @@ package com.btaz.catalogservice.infrastructure.mem;
 import com.btaz.catalogservice.domain.model.product.Product;
 import com.btaz.catalogservice.domain.model.product.ProductRepository;
 import org.bson.types.ObjectId;
-
+import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Component
 public class MemProductRepository implements ProductRepository {
     private final ConcurrentHashMap<String, Product> dataStore;
 

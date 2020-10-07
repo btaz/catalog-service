@@ -4,9 +4,10 @@ import com.btaz.catalogservice.domain.model.brand.Brand;
 import com.btaz.catalogservice.domain.model.category.Category;
 import com.btaz.catalogservice.domain.model.category.CategoryRepository;
 import org.bson.types.ObjectId;
-
+import org.springframework.stereotype.Component;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Component
 public class MemCategoryRepository implements CategoryRepository {
     private final ConcurrentHashMap<String, Category> dataStore;
 

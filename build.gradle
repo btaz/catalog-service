@@ -2,9 +2,10 @@ plugins {
 	id 'org.springframework.boot' version '2.3.3.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
+	id 'jacoco'
 }
 
-group = 'com.btaz'
+group = 'com.btaz.catalogservice'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -25,4 +26,81 @@ dependencies {
 
 test {
 	useTestNG()
+	finalizedBy jacocoTestReport
 }
+
+jacoco {
+	toolVersion = "0.8.5"
+	reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			enabled = true
+			element = 'CLASS'
+			excludes = [
+					'com.btaz.catalogservice.CatalogServiceApplication',
+					'com.btaz.catalogservice.infrastructure.*'
+			]
+			limit {
+				counter = 'LINE'
+				value = 'COVEREDRATIO'
+				minimum = 0.80
+			}
+		}
+		rule {
+			enabled = true
+			element = 'CLASS'
+			excludes = [
+					'com.btaz.catalogservice.CatalogServiceApplication',
+					'com.btaz.catalogservice.infrastructure.*'
+			]
+			limit {
+				counter = 'BRANCH'
+				value = 'COVEREDRATIO'
+				minimum = 0.80
+			}
+		}
+		rule {
+			enabled = true
+			element = 'METHOD'
+			excludes = []
+			limit {
+				counter = 'COMPLEXITY'
+				value = 'TOTALCOUNT'
+				maximum = 10
+			}
+		}
+	}
+}
+
+jacocoTestReport {
+	dependsOn test
+
+	reports {
+		xml.enabled true
+		html.enabled true
+		html.destination file("${buildDir}/jacocoHtml")
+	}
+
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it,
+					exclude: [
+							'com/btaz/catalogservice/infrastructure/**'
+					]
+			)
+		}))
+	}
+}
+
+check.dependsOn jacocoTestCoverageVerification
+
+//jacocoTestReport {
+//	afterEvaluate {
+//		classDirectories = files(classDirectories.files.collect {
+//			fileTree(dir: it, exclude: 'com/btaz/catalogservice/infrastructure/**')
+//		})
+//	}
+//}

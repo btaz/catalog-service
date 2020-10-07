@@ -8,9 +8,11 @@ import com.btaz.catalogservice.domain.model.category.Category;
 import com.btaz.catalogservice.domain.model.category.CategoryRepository;
 import com.btaz.catalogservice.domain.model.product.Product;
 import com.btaz.catalogservice.domain.model.product.ProductRepository;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+@Service
 public final class CatalogService {
     private final CatalogRepository catalogRepository;
     private final BrandRepository brandRepository;

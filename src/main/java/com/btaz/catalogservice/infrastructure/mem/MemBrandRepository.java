@@ -3,9 +3,10 @@ package com.btaz.catalogservice.infrastructure.mem;
 import com.btaz.catalogservice.domain.model.brand.Brand;
 import com.btaz.catalogservice.domain.model.brand.BrandRepository;
 import org.bson.types.ObjectId;
-
+import org.springframework.stereotype.Component;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Component
 public final class MemBrandRepository implements BrandRepository {
     private final ConcurrentHashMap<String, Brand> dataStore;
 

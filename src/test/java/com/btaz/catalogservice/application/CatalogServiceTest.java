@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -90,6 +91,55 @@ public class CatalogServiceTest {
         // then
         assertThat(service.catalogCount()).isEqualTo(0);
         assertThat(catalog).isNull();
+    }
+
+    @Test
+    public void testCatalogObjectEquality() {
+        // given
+        String id = "catalog-id";
+        String name = "tools";
+        String description = "miscellaneous tools";
+
+        // when
+        Catalog catalog1 = new Catalog(id, name, description);
+        Catalog catalog2 = new Catalog(id, name, description);
+
+        // then
+        assertThat(catalog1).isNotNull();
+        assertThat(catalog2).isNotNull();
+        assertThat(catalog1.id()).isEqualTo(catalog2.id());
+        assertThat(catalog1.name()).isEqualTo(catalog2.name());
+        assertThat(catalog1.description()).isEqualTo(catalog2.description());
+        assertThat(catalog1.hashCode()).isEqualTo(catalog2.hashCode());
+        assertThat(catalog1.equals(catalog2)).isTrue();
+        assertThat(catalog1.equals(catalog1)).isTrue();
+    }
+
+    @Test
+    public void testCatalogObjectNonEquality() {
+        // given
+        String id1 = "catalog-id-1";
+        String name1 = "cats";
+        String description1 = "miscellaneous cats";
+        String id2 = "catalog-id-2";
+        String name2 = "dogs";
+        String description2 = "miscellaneous dogs";
+
+        // when
+        Catalog catalog1 = new Catalog(id1, name1, description1);
+        Catalog catalog2 = new Catalog(id2, name2, description2);
+
+        // then
+        assertThat(catalog1).isNotNull();
+        assertThat(catalog2).isNotNull();
+        assertThat(catalog1.id()).isNotEqualTo(catalog2.id());
+        assertThat(catalog1.name()).isNotEqualTo(catalog2.name());
+        assertThat(catalog1.description()).isNotEqualTo(catalog2.description());
+        assertThat(catalog1.hashCode()).isNotEqualTo(catalog2.hashCode());
+        assertThat(catalog1.equals(catalog2)).isFalse();
+        //noinspection ConstantConditions
+        assertThat(catalog1.equals(null)).isFalse();
+        assertThat(catalog1.equals(new Object())).isFalse();
     }
 
     @Test

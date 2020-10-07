@@ -3,9 +3,10 @@ package com.btaz.catalogservice.infrastructure.mem;
 import com.btaz.catalogservice.domain.model.catalog.Catalog;
 import com.btaz.catalogservice.domain.model.catalog.CatalogRepository;
 import org.bson.types.ObjectId;
-
+import org.springframework.stereotype.Component;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Component
 public class MemCatalogRepository implements CatalogRepository {
     private final ConcurrentHashMap<String,Catalog> dataStore;
 
